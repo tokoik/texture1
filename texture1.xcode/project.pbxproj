@@ -1,0 +1,297 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 39;
+	objects = {
+		7DD611B706F8478300615998 = {
+			children = (
+				7DE19F9306FBEC25008EBCB8,
+				7DE19F9406FBEC25008EBCB8,
+				7DD6121806F8485E00615998,
+				7DD6125606F87A7500615998,
+				7DD6122C06F8495D00615998,
+				7DD6121906F8485E00615998,
+				7DD6121106F8483500615998,
+				7DD6120B06F8480300615998,
+				7DD6120706F847F000615998,
+				7DD611FD06F847C800615998,
+			);
+			isa = PBXGroup;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7DD611B906F8478300615998 = {
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			isa = PBXBuildStyle;
+			name = Development;
+		};
+		7DD611BA06F8478300615998 = {
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			isa = PBXBuildStyle;
+			name = Deployment;
+		};
+		7DD611BB06F8478300615998 = {
+			buildSettings = {
+			};
+			buildStyles = (
+				7DD611B906F8478300615998,
+				7DD611BA06F8478300615998,
+			);
+			hasScannedForEncodings = 0;
+			isa = PBXProject;
+			mainGroup = 7DD611B706F8478300615998;
+			productRefGroup = 7DD611FD06F847C800615998;
+			projectDirPath = "";
+			targets = (
+				7DD6120406F847DF00615998,
+			);
+		};
+		7DD611FD06F847C800615998 = {
+			children = (
+				7DD6120506F847DF00615998,
+			);
+			isa = PBXGroup;
+			name = Products;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7DD611FF06F847DF00615998 = {
+			buildActionMask = 2147483647;
+			files = (
+				7DD6121E06F8485E00615998,
+				7DE19F9506FBEC25008EBCB8,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7DD6120006F847DF00615998 = {
+			buildActionMask = 2147483647;
+			files = (
+				7DD6125706F87A7500615998,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7DD6120106F847DF00615998 = {
+			buildActionMask = 2147483647;
+			files = (
+				7DD6121D06F8485E00615998,
+				7DD6122D06F8495D00615998,
+				7DE19F9606FBEC25008EBCB8,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7DD6120206F847DF00615998 = {
+			buildActionMask = 2147483647;
+			files = (
+				7DD6120806F847F000615998,
+				7DD6120C06F8480300615998,
+				7DD6121206F8483500615998,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7DD6120306F847DF00615998 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7DD6120406F847DF00615998 = {
+			buildPhases = (
+				7DD611FF06F847DF00615998,
+				7DD6120006F847DF00615998,
+				7DD6120106F847DF00615998,
+				7DD6120206F847DF00615998,
+				7DD6120306F847DF00615998,
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = texture1;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = app;
+			};
+			dependencies = (
+			);
+			isa = PBXApplicationTarget;
+			name = texture1;
+			productInstallPath = "$(USER_APPS_DIR)";
+			productName = texture1;
+			productReference = 7DD6120506F847DF00615998;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string></string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string></string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1d1</string>
+</dict>
+</plist>
+";
+		};
+		7DD6120506F847DF00615998 = {
+			explicitFileType = wrapper.application;
+			includeInIndex = 0;
+			isa = PBXFileReference;
+			path = texture1.app;
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7DD6120706F847F000615998 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = GLUT.framework;
+			path = /System/Library/Frameworks/GLUT.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		7DD6120806F847F000615998 = {
+			fileRef = 7DD6120706F847F000615998;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7DD6120B06F8480300615998 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = OpenGL.framework;
+			path = /System/Library/Frameworks/OpenGL.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		7DD6120C06F8480300615998 = {
+			fileRef = 7DD6120B06F8480300615998;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7DD6121106F8483500615998 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = Foundation.framework;
+			path = /System/Library/Frameworks/Foundation.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		7DD6121206F8483500615998 = {
+			fileRef = 7DD6121106F8483500615998;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7DD6121806F8485E00615998 = {
+			fileEncoding = "-2147483647";
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = trackball.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7DD6121906F8485E00615998 = {
+			fileEncoding = "-2147483647";
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = trackball.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7DD6121D06F8485E00615998 = {
+			fileRef = 7DD6121806F8485E00615998;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7DD6121E06F8485E00615998 = {
+			fileRef = 7DD6121906F8485E00615998;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7DD6122C06F8495D00615998 = {
+			fileEncoding = "-2147483647";
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = main.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7DD6122D06F8495D00615998 = {
+			fileRef = 7DD6122C06F8495D00615998;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7DD6125606F87A7500615998 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			path = tire.raw;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7DD6125706F87A7500615998 = {
+			fileRef = 7DD6125606F87A7500615998;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7DE19F9306FBEC25008EBCB8 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = box.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7DE19F9406FBEC25008EBCB8 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = box.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7DE19F9506FBEC25008EBCB8 = {
+			fileRef = 7DE19F9306FBEC25008EBCB8;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7DE19F9606FBEC25008EBCB8 = {
+			fileRef = 7DE19F9406FBEC25008EBCB8;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+	};
+	rootObject = 7DD611BB06F8478300615998;
+}
