@@ -1,5 +1,5 @@
-/*
-** ” ‚Ì•`‰æ
+ï»¿/*
+** ç®±ã®æç”»
 */
 
 #if defined(__APPLE__) || defined(MACOSX)
