@@ -84,7 +84,7 @@ make
 
 プログラムのソースコード（主に main.cpp と box.cpp）をもとに、このプログラム内で行われているテクスチャマッピングのアルゴリズムと処理手順を解説します。
 
-### A. テクスチャの読み込みと割り当て (main.cpp 内の init 関数)
+### テクスチャの読み込みと割り当て (main.cpp 内の init 関数)
 
 1.  **ファイルの読み込み:**
 
@@ -98,19 +98,19 @@ make
 
     [`glTexParameteri()`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml) 等を使用し、テクスチャを拡大縮小して貼り付ける際の補間方法（`GL_NEAREST` = ニアレストネイバー、最近傍法）、およびテクスチャ座標が定められた範囲をはみ出した際の処理（`GL_CLAMP`）を設定しています。また `GL_MODULATE` を指定することで、物体の元の色や陰影計算の結果と、テクスチャの色を掛け合わせて描画するよう指示しています。
 
-### B. アルファテストによる透過処理 (main.cpp)
+### アルファテストによる透過処理 (main.cpp)
 
 本プログラムで読み込んでいる画像には、透明度（アルファチャンネル）情報が含まれています。
 `init()` 関数内で [`glAlphaFunc(GL_GREATER, 0.5)`](https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glAlphaFunc.xml) と設定し、描画直前に [`glEnable(GL_ALPHA_TEST)`](https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glEnable.xml) を有効にしています。これは「アルファ値が 0.5 より大きい（不透明に近い）ピクセルだけを描画し、透明な部分は描画しない」という処理（アルファ抜け）であり、これにより形状が複雑に切り抜かれたような表現を簡単に実現しています。
 
-### C. テクスチャを貼る物体の描画 (box.cpp 内の box() 関数)
+### テクスチャを貼る物体の描画 (box.cpp 内の box() 関数)
 
 実際に直方体を描画している部分です。[`glBegin(GL_QUADS)`](https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glBegin.xml) から [`glEnd()`](https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glEnd.xml) の間で、6つの面（四角形）を描画しています。
 ここで最も重要なのは、[`glVertex3dv()`](https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glVertex.xml)（頂点座標の指定）を呼び出す**直前**に、[`glTexCoord2dv()`](https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glTexCoord.xml) を使って**テクスチャ座標**を指定している点です。
 
 テクスチャ座標は本来、画像の左下を (0.0, 0.0)、右上を (1.0, 1.0) として表しますが、このプログラムではあえて (0.0, 0.0) から (2.0, 2.0) という領域外の値を設定しています。通常であれば画像が繰り返しマッピングされますが、`main.cpp` の初期化処理で `GL_CLAMP` を指定しているため、画像の繰り返しは行われず、領域外は最外周の色で塗りつぶされる（または透明になる）ようになっています。
 
-### D. テクスチャのアニメーション (main.cpp 内の display() 関数)
+### テクスチャのアニメーション (main.cpp 内の display() 関数)
 
 描画するたびに呼ばれる `display()` 関数内では、アニメーションのフレーム（時間 `t`）を更新しており、その時間をもとに**テクスチャ行列 (`GL_TEXTURE`)** に対して回転変換を適用しています。
 
