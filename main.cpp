@@ -1,4 +1,4 @@
-﻿#if defined(_WIN32)
+#if defined(_WIN32)
 #  define _CRT_SECURE_NO_WARNINGS
 //#  pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 #  include <GL/glut.h>
@@ -136,7 +136,7 @@ static void display(void)
   glLoadIdentity();
   glTranslated(0.5, 0.5, 0.0);
   glRotated(t * 360.0, 0.0, 0.0, 1.0);
-  glTranslated(-0.5, -0.5, 0.0);
+  glTranslated(-1.0, -1.0, 0.0);
   
   /* モデルビュー変換行列の設定 */
   glMatrixMode(GL_MODELVIEW);
