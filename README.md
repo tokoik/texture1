@@ -12,7 +12,7 @@
 
 このプログラムは CMake を用いてビルドを構成しています。各プラットフォームごとの手順は以下の通りです。なお、プログラムをビルドするためのバイナリディレクトリは、バージョン管理ファイル（.gitignore）の設定に合わせて build という名前にします。
 
-### Windows の場合
+### 2.1 Windows の場合
 
 Visual Studio 2022 と CMake がインストールされている環境を想定しています。
 コマンドプロンプトまたは PowerShell を開き、プログラムのソースコードがあるディレクトリで以下のコマンドを実行してください。
@@ -25,7 +25,7 @@ cmake -G "Visual Studio 17 2022" ..
 
 上記を実行すると、build ディレクトリ内に Visual Studio 用のソリューションファイル (texture1.sln) が作成されます。これを Visual Studio で開き、上部のメニューからビルドを実行してください（依存ライブラリである freeglut やヘッダファイルなどは CMake が自動的にダウンロードして組み込みます）。
 
-### macOS の場合
+### 2.2 macOS の場合
 
 Xcode および CMake がインストールされている環境を想定しています。
 ターミナルを開き、プログラムのソースコードがあるディレクトリで以下のコマンドを実行してください。
@@ -38,7 +38,7 @@ cmake -G Xcode ..
 
 上記を実行すると、build ディレクトリ内に Xcode 用のプロジェクトファイル (texture1.xcodeproj) が作成されます。これを Xcode で開いてください。
 
-### Ubuntu Linux の場合
+### 2.3 Ubuntu Linux の場合
 
 ビルドには、C++コンパイラ、CMake、および OpenGL と freeglut の開発用パッケージが必要です。
 （例: sudo apt install build-essential cmake freeglut3-dev pkg-config）
@@ -54,29 +54,31 @@ make
 
 ## 3. 使い方
 
-### プログラムの起動方法
+### 3.1 プログラムの起動方法
 
-*   **Windows**: Visual Studio 上で「ローカル Windows デバッガー」をクリックして実行するか、またはコマンドプロンプトから以下のコマンドで起動します。
+各OSとも、ビルド後に生成されるバイナリディレクトリ (build) やそのサブフォルダから起動します。（※ CMake の設定により、Windows や Xcode では Debug などのフォルダ下に実行ファイルが置かれることがあります）
 
-    ```cmd
-    cd build\Debug
-    texture1.exe
-    ```
+- **Windows**: Visual Studio 上で「ローカル Windows デバッガー」をクリックして実行するか、またはコマンドプロンプトから以下のコマンドで起動します。
 
-*   **macOS**: Xcode 上で左上の「Run（再生ボタン）」をクリックするのが最も簡単です。これにより texture1.app アプリケーションバンドルとして自動的に実行されます。
+```cmd
+cd build\Debug
+texture0.exe
+```
 
-*   **Ubuntu Linux**: ターミナルから以下のコマンドで実行ファイル（バイナリ）を直接起動します。
+- **macOS**: Xcode 上で左上の「Run（再生ボタン）」をクリックするのが楽です。これにより texture0.app アプリケーションバンドルとして自動的に実行されます。アプリケーションバンドルを直接起動するなら、Finder から build/Debug/texture0.app をダブルクリックするか、ターミナルから open build/Debug/texture0.app を実行します。
 
-    ```bash
-    cd build
-    ./texture1
-    ```
+- **Ubuntu Linux**: ターミナルから以下のコマンドで実行ファイル（バイナリ）を直接起動します。
 
-### 操作方法
+```bash
+cd build
+./texture0
+```
 
-*   **マウスの左ドラッグ**: 画面上の空間をドラッグすると、表示されている箱（物体）を自由に回転させることができます。多様な角度から、テクスチャがどのように貼り付けられているかを確認してください。
+### 3.2 操作方法
 
-*   **キーボード操作**: `Q` キー、または `ESC` キー を押すとプログラムが終了します。
+* **マウスの左ドラッグ**: 画面上の空間をドラッグすると、表示されている箱（物体）を自由に回転させることができます。多様な角度から、テクスチャがどのように貼り付けられているかを確認してください。
+
+* **キーボード操作**: `Q` キー、または `ESC` キー を押すとプログラムが終了します。
 
 プログラム起動中は、箱の表面に貼り付けられた絵柄（テクスチャ）が自動的に回転し続けるアニメーションが表示されます。これは物体そのものが回転しているのではなく、テクスチャの貼り付け方をプログラム上で変化させているためです。
 
@@ -84,33 +86,33 @@ make
 
 プログラムのソースコード（主に main.cpp と box.cpp）をもとに、このプログラム内で行われているテクスチャマッピングのアルゴリズムと処理手順を解説します。
 
-### テクスチャの読み込みと割り当て (main.cpp 内の init 関数)
+### 4.1 テクスチャの読み込みと割り当て (main.cpp 内の init 関数)
 
-1.  **ファイルの読み込み:**
+1. **ファイルの読み込み:**
 
     `fopen()` と `fread()` を使って、生画像データ (tire.raw) を配列 `texture` に読み込みます（256×256ピクセル、RGBA各1バイト）。
 
-2.  **OpenGLへの転送:**
+2. **OpenGLへの転送:**
 
     [`glTexImage2D()`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml) 関数を使って、配列に読み込んだ画像データを OpenGL のシステム（VRAMなど）に**2Dテクスチャ**として登録します。
 
-3.  **各種パラメータの設定:**
+3. **各種パラメータの設定:**
 
     [`glTexParameteri()`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml) 等を使用し、テクスチャを拡大縮小して貼り付ける際の補間方法（`GL_NEAREST` = ニアレストネイバー、最近傍法）、およびテクスチャ座標が定められた範囲をはみ出した際の処理（`GL_CLAMP`）を設定しています。また `GL_MODULATE` を指定することで、物体の元の色や陰影計算の結果と、テクスチャの色を掛け合わせて描画するよう指示しています。
 
-### アルファテストによる透過処理 (main.cpp)
+### 4.2 アルファテストによる透過処理 (main.cpp)
 
 本プログラムで読み込んでいる画像には、透明度（アルファチャンネル）情報が含まれています。
 `init()` 関数内で [`glAlphaFunc(GL_GREATER, 0.5)`](https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glAlphaFunc.xml) と設定し、描画直前に [`glEnable(GL_ALPHA_TEST)`](https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glEnable.xml) を有効にしています。これは「アルファ値が 0.5 より大きい（不透明に近い）ピクセルだけを描画し、透明な部分は描画しない」という処理（アルファ抜け）であり、これにより形状が複雑に切り抜かれたような表現を簡単に実現しています。
 
-### テクスチャを貼る物体の描画 (box.cpp 内の box() 関数)
+### 4.3 テクスチャを貼る物体の描画 (box.cpp 内の box() 関数)
 
 実際に直方体を描画している部分です。[`glBegin(GL_QUADS)`](https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glBegin.xml) から [`glEnd()`](https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glEnd.xml) の間で、6つの面（四角形）を描画しています。
 ここで最も重要なのは、[`glVertex3dv()`](https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glVertex.xml)（頂点座標の指定）を呼び出す**直前**に、[`glTexCoord2dv()`](https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glTexCoord.xml) を使って**テクスチャ座標**を指定している点です。
 
 テクスチャ座標は本来、画像の左下を (0.0, 0.0)、右上を (1.0, 1.0) として表しますが、このプログラムではあえて (0.0, 0.0) から (2.0, 2.0) という領域外の値を設定しています。通常であれば画像が繰り返しマッピングされますが、`main.cpp` の初期化処理で `GL_CLAMP` を指定しているため、画像の繰り返しは行われず、領域外は最外周の色で塗りつぶされる（または透明になる）ようになっています。
 
-### テクスチャのアニメーション (main.cpp 内の display() 関数)
+### 4.4 テクスチャのアニメーション (main.cpp 内の display() 関数)
 
 描画するたびに呼ばれる `display()` 関数内では、アニメーションのフレーム（時間 `t`）を更新しており、その時間をもとに**テクスチャ行列 (`GL_TEXTURE`)** に対して回転変換を適用しています。
 
