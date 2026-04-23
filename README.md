@@ -8,8 +8,9 @@
 
 今回は、3Dコンピュータグラフィックスにおける「テクスチャマッピング」において、**テクスチャ座標**に焦点を当てます。テクスチャ座標は、テクスチャを物体表面に貼り付ける際に、テクスチャのどの部分を物体のどの頂点に対応させるかを指定するための座標です。
 
-<img src="texture1.gif" style="display: block; margin: 0 auto;"
-width="256" height="256" alt="立方体の6面にテクスチャを貼る" />
+<div style="text-align: center;">
+<img src="texture1.gif" width="256" height="256" alt="立方体の6面にテクスチャを貼る" />
+</div>
 
 ## 2. ビルド方法
 
