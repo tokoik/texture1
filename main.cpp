@@ -21,9 +21,9 @@ static const GLfloat lightamb[] = { 0.1f, 0.1f, 0.1f, 1.0f }; /* 環境光強度
 /*
 ** テクスチャ
 */
-#define TEXWIDTH  256                      /* テクスチャの幅　　　 */
-#define TEXHEIGHT 256                      /* テクスチャの高さ　　 */
-static const char texture1[] = "tire.raw"; /* テクスチャファイル名 */
+#define TEXWIDTH  256                               /* テクスチャの幅　　　 */
+#define TEXHEIGHT 256                               /* テクスチャの高さ　　 */
+static const char texture1[] = "tire.raw";          /* テクスチャファイル名 */
 
 /*
 ** 初期化
@@ -33,7 +33,7 @@ static void init(void)
   /* テクスチャの読み込みに使う配列 */
   GLubyte texture[TEXHEIGHT][TEXWIDTH][4];
   FILE *fp;
-  
+
   /* テクスチャ画像の読み込み */
   if ((fp = fopen(texture1, "rb")) != NULL) {
     fread(texture, sizeof texture, 1, fp);
@@ -42,39 +42,39 @@ static void init(void)
   else {
     perror(texture1);
   }
-  
+
   /* テクスチャ画像はバイト単位に詰め込まれている */
   glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-  
+
   /* テクスチャの割り当て */
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, TEXWIDTH, TEXHEIGHT, 0,
                GL_RGBA, GL_UNSIGNED_BYTE, texture);
-  
+
   /* テクスチャを拡大・縮小する方法の指定 */
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  
+
   /* テクスチャの繰り返し方法の指定 */
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-  
+
   /* テクスチャ環境 */
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-  
+
 #if 0
   /* 混合する色の設定 */
   static const GLfloat blend[] = { 0.0, 1.0, 0.0, 1.0 };
   glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, blend);
 #endif
-  
+
   /* アルファテストの判別関数 */
   glAlphaFunc(GL_GREATER, 0.5);
-  
+
   /* 初期設定 */
   glClearColor(0.3f, 0.3f, 1.0f, 0.0f);
   glEnable(GL_DEPTH_TEST);
   glDisable(GL_CULL_FACE);
-  
+
   /* 光源の初期設定 */
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
@@ -92,22 +92,22 @@ static void init(void)
 static void scene(void)
 {
   static const GLfloat color[] = { 1.0, 1.0, 1.0, 1.0 };  /* 材質 (色) */
-  
+
   /* 材質の設定 */
   glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, color);
-  
+
   /* アルファテスト開始 */
   glEnable(GL_ALPHA_TEST);
-  
+
   /* テクスチャマッピング開始 */
   glEnable(GL_TEXTURE_2D);
-  
+
   /* 箱を描く */
   box(1.0, 1.0, 1.0);
-  
+
   /* テクスチャマッピング終了 */
   glDisable(GL_TEXTURE_2D);
-  
+
   /* アルファテスト終了 */
   glDisable(GL_ALPHA_TEST);
 }
@@ -128,35 +128,35 @@ static void display(void)
   /* フレーム数をカウントして時間として使う */
   static int frame = 0;                      /* フレーム数　　　　　　　 */
   double t = (double)frame / (double)FRAMES; /* 時間とともに 0→1 に変化 */
-  
+
   if (++frame >= FRAMES) frame = 0;
-  
+
   /* テクスチャ行列の設定 */
   glMatrixMode(GL_TEXTURE);
   glLoadIdentity();
   glTranslated(0.5, 0.5, 0.0);
   glRotated(t * 360.0, 0.0, 0.0, 1.0);
   glTranslated(-1.0, -1.0, 0.0);
-  
+
   /* モデルビュー変換行列の設定 */
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  
+
   /* 光源の位置を設定 */
   glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
-  
+
   /* 視点の移動（物体の方を奥に移動）*/
   glTranslated(0.0, 0.0, -3.0);
-  
+
   /* トラックボール処理による回転 */
   glMultMatrixd(trackballRotation());
-  
+
   /* 画面クリア */
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  
+
   /* シーンの描画 */
   scene();
-  
+
   /* ダブルバッファリング */
   glutSwapBuffers();
 }
@@ -165,13 +165,13 @@ static void resize(int w, int h)
 {
   /* トラックボールする範囲 */
   trackballRegion(w, h);
-  
+
   /* ウィンドウ全体をビューポートにする */
   glViewport(0, 0, w, h);
-  
+
   /* 透視変換行列の指定 */
   glMatrixMode(GL_PROJECTION);
-  
+
   /* 透視変換行列の初期化 */
   glLoadIdentity();
   gluPerspective(60.0, (double)w / (double)h, 1.0, 100.0);
