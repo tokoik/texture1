@@ -1,11 +1,6 @@
 ﻿/*
 ** 簡易トラックボール処理
 */
-
-#if defined(__APPLE__) || defined(MACOSX)
-#  include <Carbon/Carbon.h>
-#endif
-
 extern void trackballInit(void);
 extern void trackballRegion(int w, int h);
 extern void trackballStart(int x, int y);
