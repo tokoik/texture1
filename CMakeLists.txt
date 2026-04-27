@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(texture1 LANGUAGES C CXX)
+project(texture1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -17,7 +17,9 @@ set(HEADERS
 )
 
 # テクスチャファイルなど
-set(TEXTURE_FILE "tire.raw")
+set(TEXTURE_FILES
+    "tire.raw"
+)
 
 if(APPLE)
     # macOS の設定
@@ -25,7 +27,7 @@ if(APPLE)
     set(PLIST_FILE "Info.plist")
 
     # アプリケーションバンドルとして実行ファイルを作成
-    add_executable(${PROJECT_NAME} MACOSX_BUNDLE ${SOURCES} ${HEADERS} ${TEXTURE_FILE} ${ICON_FILE})
+    add_executable(${PROJECT_NAME} MACOSX_BUNDLE ${SOURCES} ${HEADERS} ${TEXTURE_FILES} ${ICON_FILE})
 
     # GLUT と OpenGL の Framework を検索・リンク
     find_library(GLUT_LIBRARY GLUT)
@@ -42,11 +44,11 @@ if(APPLE)
         XCODE_GENERATE_SCHEME ON
     )
 
-    # tire.raw などをアプリケーションバンドル内の Resources に組み込む
-    set_source_files_properties(${TEXTURE_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+    # テクスチャファイルなどをアプリケーションバンドル内の Resources に組み込む
+    set_source_files_properties(${TEXTURE_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     set_source_files_properties(${ICON_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 
-    # Xcode 上で Run したときに texture1.app が起動 (スタートアッププロジェクト化)
+    # Xcode 上で Run したときに起動するように texture1.app をスタートアッププロジェクト化する
     set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY XCODE_GENERATE_SCHEME ON)
 
 elseif(WIN32)
@@ -87,16 +89,18 @@ elseif(WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE freeglut_static OpenGL::GL)
     target_compile_definitions(${PROJECT_NAME} PRIVATE FREEGLUT_STATIC)
 
-    # ビルド後にテクスチャファイルを実行ファイルと同じ階層にコピー (起動時に読み込めるようにする)
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_CURRENT_SOURCE_DIR}/${TEXTURE_FILE}"
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
+    # 起動時に読み込めるようにビルド後にテクスチャファイルを実行ファイルと同じ階層にコピーする
+    foreach(TEX_FILE IN LISTS TEXTURE_FILES)
+        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/${TEX_FILE}"
+            "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
+    endforeach()
 
     # Visual Studio のスタートアッププロジェクトとして設定
     set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
     
-    # Visual Studio で実行(F5等)した際の作業ディレクトリを実行ファイルと同階層にする
+    # Visual Studio で実行する際の作業ディレクトリを実行ファイルと同階層にする
     set_target_properties(${PROJECT_NAME} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
 
 else()
@@ -125,10 +129,12 @@ else()
     # 標準数学ライブラリ
     target_link_libraries(${PROJECT_NAME} PRIVATE m)
 
-    # ビルド後にテクスチャファイルを実行ファイルと同じ階層にコピー (起動時に読み込めるようにする)
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_CURRENT_SOURCE_DIR}/${TEXTURE_FILE}"
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
+    # 起動時に読み込めるようにビルド後にテクスチャファイルを実行ファイルと同じ階層にコピーする
+    foreach(TEX_FILE IN LISTS TEXTURE_FILES)
+        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/${TEX_FILE}"
+            "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
+    endforeach()
 
 endif()
