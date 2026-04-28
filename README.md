@@ -4,13 +4,11 @@
 
 このプログラムは、OpenGL における「テクスチャマッピング (Texture Mapping)」の基礎を学ぶための、学生向けのサンプルプログラムです。本プログラムは、以下のブログ記事の解説に沿って学習を進めるための雛形として提供されています。
 
-- [テクスチャ第５回：テクスチャ座標](https://tokoik.github.io/blog/opengl/%E3%83%86%E3%82%AF%E3%82%B9%E3%83%81%E3%83%A3/2004/09/17/texture.html)
+- [テクスチャ:第５回 テクスチャ座標](https://tokoik.github.io/blog/opengl/%E3%83%86%E3%82%AF%E3%82%B9%E3%83%81%E3%83%A3/2004/09/17/texture.html)
 
 今回は、3Dコンピュータグラフィックスにおける「テクスチャマッピング」において、**テクスチャ座標**に焦点を当てます。テクスチャ座標は、テクスチャを物体表面に貼り付ける際に、テクスチャのどの部分を物体のどの頂点に対応させるかを指定するための座標です。
 
-<div style="text-align: center;">
-<img src="texture1.gif" width="256" height="256" alt="立方体の6面にテクスチャを貼る" />
-</div>
+![立方体の6面にテクスチャを貼る](https://tokoik.github.io/blog/assets/images/texture1.gif)
 
 ## 2. ビルド方法
 
