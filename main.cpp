@@ -27,32 +27,32 @@ static const GLfloat lightamb[] = { 0.1f, 0.1f, 0.1f, 1.0f }; /* 環境光強度
 */
 #define TEXWIDTH  256                               /* テクスチャの幅　　　 */
 #define TEXHEIGHT 256                               /* テクスチャの高さ　　 */
-static const char texture1[] = "tire.raw";          /* テクスチャファイル名 */
+static const char texture_file[] = "tire.raw";      /* テクスチャファイル名 */
 
 /*
 ** 初期化
 */
 static void init(void)
 {
+  /* テクスチャ画像はバイト単位に詰め込まれている */
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+
   /* テクスチャの読み込みに使う配列 */
   GLubyte texture[TEXHEIGHT][TEXWIDTH][4];
   FILE *fp;
 
   /* テクスチャ画像の読み込み */
-  if ((fp = fopen(texture1, "rb")) != NULL) {
+  if ((fp = fopen(texture_file, "rb")) != NULL) {
     fread(texture, sizeof texture, 1, fp);
     fclose(fp);
   }
   else {
-    perror(texture1);
+    perror(texture_file);
   }
-
-  /* テクスチャ画像はバイト単位に詰め込まれている */
-  glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
   /* テクスチャの割り当て */
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, TEXWIDTH, TEXHEIGHT, 0,
-               GL_RGBA, GL_UNSIGNED_BYTE, texture);
+    GL_RGBA, GL_UNSIGNED_BYTE, texture);
 
   /* テクスチャを拡大・縮小する方法の指定 */
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -65,8 +65,7 @@ static void init(void)
   /* テクスチャ環境 */
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-#if 0
-  /* 混合する色の設定 */
+#if 0 /* テクスチャに別の色を混合する場合は 1 にしてください */
   static const GLfloat blend[] = { 0.0, 1.0, 0.0, 1.0 };
   glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, blend);
 #endif
@@ -135,13 +134,6 @@ static void display(void)
   /* アニメーションのサイクルごとにフレーム数をリセットする */
   if (++frame >= FRAMES) frame = 0;
 
-  /* テクスチャ行列の設定 */
-  glMatrixMode(GL_TEXTURE);
-  glLoadIdentity();
-  glTranslated(0.5, 0.5, 0.0);
-  glRotated(t * 360.0, 0.0, 0.0, 1.0);
-  glTranslated(-1.0, -1.0, 0.0);
-
   /* モデルビュー変換行列の設定 */
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -152,8 +144,15 @@ static void display(void)
   /* 視点の移動（物体の方を奥に移動）*/
   glTranslated(0.0, 0.0, -3.0);
 
-  /* トラックボール処理による回転 */
+  /* トラックボール処理で図形を回転 */
   glMultMatrixd(trackballRotation());
+
+  /* テクスチャ行列の設定 */
+  glMatrixMode(GL_TEXTURE);
+  glLoadIdentity();
+  glTranslated(0.5, 0.5, 0.0);
+  glRotated(t * 360.0, 0.0, 0.0, 1.0);
+  glTranslated(-1.0, -1.0, 0.0);
 
   /* 画面クリア */
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

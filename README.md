@@ -107,15 +107,16 @@ cd build
 
 1. **ファイルの読み込み:**
 
-    `fopen()` と `fread()` を使って、生画像データ (tire.raw) を配列 `texture` に読み込みます（256×256ピクセル、RGBA各1バイト）。
+    まず `glPixelStorei(GL_UNPACK_ALIGNMENT, 4)` を実行し、テクスチャ画像がメモリ上で4バイト境界に配置されていることを指定します。その後、`fopen()` と `fread()` を使って、生画像データ (tire.raw) を配列 `texture` に読み込みます（256×256ピクセル、RGBA各1バイト）。
 
 2. **OpenGLへの転送:**
 
-[`glTexImage2D()`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml) 関数を使って、配列に読み込んだ画像データを OpenGL のシステム（VRAMなど）に**2Dテクスチャ**として登録します。
+    [`glTexImage2D()`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml) 関数を使って、配列に読み込んだ画像データを OpenGL のシステム（VRAMなど）に**2Dテクスチャ**として登録します。
 
 3. **各種パラメータの設定:**
 
-[`glTexParameteri()`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml) 等を使用し、テクスチャを拡大縮小して貼り付ける際の補間方法（`GL_NEAREST` = ニアレストネイバー、最近傍法）、およびテクスチャ座標が定められた範囲をはみ出した際の処理（`GL_CLAMP`）を設定しています。また `GL_MODULATE` を指定することで、物体の元の色や陰影計算の結果と、テクスチャの色を掛け合わせて描画するよう指示しています。
+    [`glTexParameteri()`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml) 等を使用し、テクスチャを拡大縮小して貼り付ける際の補間方法（`GL_NEAREST` = ニアレストネイバー、最近傍法）、およびテクスチャ座標が定められた範囲をはみ出した際の処理（`GL_CLAMP`）を設定しています。また `GL_MODULATE` を指定することで、物体の元の色や陰影計算の結果と、テクスチャの色を掛け合わせて描画するよう指示しています。
+    なお、コード中の `#if 0` を `#if 1` に変更することで、テクスチャに別の色を混合する処理を試すことも可能です。
 
 ### 4.2 アルファテストによる透過処理 (main.cpp)
 
@@ -127,10 +128,15 @@ cd build
 
 テクスチャ座標は本来、画像の左下を (0.0, 0.0)、右上を (1.0, 1.0) として表しますが、このプログラムではあえて (0.0, 0.0) から (2.0, 2.0) という領域外の値を設定しています。通常であれば画像が繰り返しマッピングされますが、`main.cpp` の初期化処理で `GL_CLAMP` を指定しているため、画像の繰り返しは行われず、領域外は最外周の色で塗りつぶされる（または透明になる）ようになっています。
 
-### 4.4 テクスチャのアニメーション (main.cpp 内の display() 関数)
+### 4.4 テクスチャのアニメーションと図形の回転 (main.cpp 内の display() 関数)
 
-描画するたびに呼ばれる `display()` 関数内では、アニメーションのフレーム（時間 `t`）を更新しており、その時間をもとに**テクスチャ行列 (`GL_TEXTURE`)** に対して回転変換を適用しています。
+描画するたびに呼ばれる `display()` 関数内では、以下の２つの行列を操作しています。
 
+1. **図形の回転 (モデルビュー行列):**
+   `GL_MODELVIEW` モードでトラックボール処理の回転行列を掛け合わせることで、マウス操作に応じて図形（箱）自体を回転させます。
+
+2. **テクスチャのアニメーション (テクスチャ行列):**
+   アニメーションの時間 `t` をもとに、`GL_TEXTURE` モードでテクスチャ行列に対して回転変換を適用しています。
 
 ```c
 glMatrixMode(GL_TEXTURE);
