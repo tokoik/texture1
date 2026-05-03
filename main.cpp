@@ -65,12 +65,12 @@ static void init(void)
 
 #if 0
   /* 混合する色の設定 */
-  static const GLfloat blend[] = { 0.0, 1.0, 0.0, 1.0 };
+  static const GLfloat blend[] = { 0.0f, 1.0f, 0.0f, 1.0f };
   glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, blend);
 #endif
 
   /* アルファテストの判別関数 */
-  glAlphaFunc(GL_GREATER, 0.5);
+  glAlphaFunc(GL_GREATER, 0.5f);
 
   /* 初期設定 */
   glClearColor(0.3f, 0.3f, 1.0f, 0.0f);
@@ -94,7 +94,7 @@ static void init(void)
 */
 static void scene(void)
 {
-  static const GLfloat color[] = { 1.0, 1.0, 1.0, 1.0 };  /* 材質 (色) */
+  static const GLfloat color[] = { 1.0f, 1.0f, 1.0f, 1.0f };   /* 材質 (色) */
 
   /* 材質の設定 */
   glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, color);
@@ -177,7 +177,7 @@ static void resize(int w, int h)
 
   /* 透視変換行列の初期化 */
   glLoadIdentity();
-  gluPerspective(60.0, (double)w / (double)h, 1.0, 100.0);
+  gluPerspective(60.0, (double)w / (double)h, 0.1, 10.0);
 }
 
 static void idle(void)
