@@ -8,7 +8,7 @@
 
 今回は、3Dコンピュータグラフィックスにおける「テクスチャマッピング」において、**テクスチャ座標**に焦点を当てます。テクスチャ座標は、テクスチャを物体表面に貼り付ける際に、テクスチャのどの部分を物体のどの頂点に対応させるかを指定するための座標です。
 
-![立方体の6面にテクスチャを貼る](https://tokoik.github.io/blog/assets/images/texture1.gif)
+![立方体の６面にテクスチャを貼る](https://tokoik.github.io/blog/assets/images/texture1.webp)
 
 ## 2. ビルド方法
 
