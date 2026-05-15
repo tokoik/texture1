@@ -17,51 +17,44 @@
 ### 2.1 Windows (Visual Studio 2022 の場合)
 
 1. コマンドプロンプトまたは PowerShell を開き、このプロジェクトのディレクトリに移動します。
-
 2. 以下のコマンドを実行してビルドディレクトリを作成し、CMake で構成を行います。
 
-```bat
-mkdir build
-cd build
-cmake .. -G "Visual Studio 17 2022"
-```
+   ```bat
+   mkdir build
+   cd build
+   cmake .. -G "Visual Studio 17 2022"
+   ```
 
 3. 生成された build フォルダ内の texture1.sln を Visual Studio で開きます。
-
 4. ソリューションエクスプローラーで texture1 プロジェクトを右クリックし、「スタートアップ プロジェクトに設定」を選択します。
-
 5. 「ローカル Windows デバッガー」をクリックするか、F5 キーを押してビルドおよび実行します。
 
 ### 2.2 macOS (Xcode の場合)
 
 1. ターミナルを開き、このプロジェクトのディレクトリに移動します。
-
 2. 以下のコマンドを実行してビルドディレクトリを作成し、Xcode 用のプロジェクトを生成します。
 
-```sh
-mkdir build
-cd build
-cmake .. -G Xcode
-```
+   ```sh
+   mkdir build
+   cd build
+   cmake .. -G Xcode
+   ```
 
 3. 生成された build/texture1.xcodeproj を Xcode で開きます。
-
 4. 左上のスキーム選択（再生ボタンの横）が texture1 になっていることを確認します。
-
 5. 「Run」ボタン（再生ボタン）をクリックするか、Command + R を押してビルドおよび実行します。
 
 ### 2.3 Ubuntu Linux
 
 1. ターミナルを開き、このプロジェクトのディレクトリに移動します。
-
 2. 必要なパッケージ（freeglut3-dev や pkg-config など）がインストールされていることを確認し、以下のコマンドでビルドします。
 
-```sh
-mkdir build
-cd build
-cmake ..
-make
-```
+   ```sh
+   mkdir build
+   cd build
+   cmake ..
+   make
+   ```
 
 ## 3. 使い方
 
@@ -71,31 +64,35 @@ make
 
 - **Windows**
 
-Visual Studio 上で「ローカル Windows デバッガー」をクリックして実行するか、またはコマンドプロンプトから以下のコマンドで起動します。
+  Visual Studio 上で「ローカル Windows デバッガー」をクリックして実行するか、またはコマンドプロンプトから以下のコマンドで起動します。
 
-```cmd
-cd build\Debug
-texture1.exe
-```
+  ```cmd
+  cd build\Debug
+  texture1.exe
+  ```
 
 - **macOS**
 
-Xcode 上で左上の「Run（再生ボタン）」をクリックするのが楽です。これにより texture1.app アプリケーションバンドルとして自動的に実行されます。アプリケーションバンドルを直接起動するなら、Finder から build/Debug/texture1.app をダブルクリックするか、ターミナルから open build/Debug/texture1.app を実行します (この場合はエラーメッセージ等が表示されません)。
+  Xcode 上で左上の「Run（再生ボタン）」をクリックするのが楽です。これにより texture1.app アプリケーションバンドルとして自動的に実行されます。アプリケーションバンドルを直接起動するなら、Finder から build/Debug/texture1.app をダブルクリックするか、ターミナルから open build/Debug/texture1.app を実行します (この場合はエラーメッセージ等が表示されません)。
 
 - **Ubuntu Linux**
 
-ターミナルから以下のコマンドで実行ファイル（バイナリ）を直接起動します。
+  ターミナルから以下のコマンドで実行ファイル（バイナリ）を直接起動します。
 
-```sh
-cd build
-./texture1
-```
+  ```sh
+  cd build
+  ./texture1
+  ```
 
 ### 3.2 操作方法
 
-- **マウスの左ボタンでドラッグ**: 画面内のオブジェクト（箱）を３次元的に回転させることができます。多様な角度から、テクスチャがどのように貼り付けられているかを確認してください。
+- **マウスの左ボタンでドラッグ**
 
-- **キーボードの q, Q または ESC キー**: プログラムを終了します。
+  画面内のオブジェクト（箱）を３次元的に回転させることができます。多様な角度から、テクスチャがどのように貼り付けられているかを確認してください。
+
+- **キーボードの q, Q または ESC キー**
+
+  プログラムを終了します。
 
 プログラム起動中は、箱の表面に貼り付けられた絵柄（テクスチャ）が自動的に回転し続けるアニメーションが表示されます。これは物体そのものが回転しているのではなく、テクスチャの貼り付け方をプログラム上で変化させているためです。
 
@@ -105,18 +102,18 @@ cd build
 
 ### 4.1 テクスチャの読み込みと割り当て (main.cpp 内の init 関数)
 
-1. **ファイルの読み込み:**
+1. **ファイルの読み込み**
 
-    まず `glPixelStorei(` `GL_UNPACK_ALIGNMENT`, 4 `)` を実行し、テクスチャ画像がメモリ上で4バイト境界に配置されていることを指定します。その後、`fopen()` と `fread()` を使って、生画像データ (tire.raw) を配列 `texture` に読み込みます（256×256ピクセル、RGBA各1バイト）。
+   まず `glPixelStorei(` `GL_UNPACK_ALIGNMENT`, 4 `)` を実行し、テクスチャ画像がメモリ上で4バイト境界に配置されていることを指定します。その後、`fopen()` と `fread()` を使って、生画像データ (tire.raw) を配列 `texture` に読み込みます（256×256ピクセル、RGBA各1バイト）。
 
-2. **OpenGLへの転送:**
+2. **OpenGLへの転送**
 
-    [`glTexImage2D()`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml) 関数を使って、配列に読み込んだ画像データを OpenGL のシステム（VRAMなど）に**2Dテクスチャ**として登録します。
+   [`glTexImage2D()`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml) 関数を使って、配列に読み込んだ画像データを OpenGL のシステム（VRAMなど）に**2Dテクスチャ**として登録します。
 
-3. **各種パラメータの設定:**
+3. **各種パラメータの設定**
 
-    [`glTexParameteri()`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml) 等を使用し、テクスチャを拡大縮小して貼り付ける際の補間方法（`GL_NEAREST` = ニアレストネイバー、最近傍法）、およびテクスチャ座標が定められた範囲をはみ出した際の処理（`GL_CLAMP`）を設定しています。また `GL_MODULATE` を指定することで、物体の元の色や陰影計算の結果と、テクスチャの色を掛け合わせて描画するよう指示しています。
-    なお、コード中の `#if 0` を `#if 1` に変更することで、テクスチャに別の色を混合する処理を試すことも可能です。
+   [`glTexParameteri()`](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml) 等を使用し、テクスチャを拡大縮小して貼り付ける際の補間方法（`GL_NEAREST` = ニアレストネイバー、最近傍法）、およびテクスチャ座標が定められた範囲をはみ出した際の処理（`GL_CLAMP`）を設定しています。また `GL_MODULATE` を指定することで、物体の元の色や陰影計算の結果と、テクスチャの色を掛け合わせて描画するよう指示しています。
+   なお、コード中の `#if 0` を `#if 1` に変更することで、テクスチャに別の色を混合する処理を試すことも可能です。
 
 ### 4.2 アルファテストによる透過処理 (main.cpp)
 
@@ -132,19 +129,21 @@ cd build
 
 描画するたびに呼ばれる `display()` 関数内では、以下の２つの行列を操作しています。
 
-1. **図形の回転 (モデルビュー行列):**
+1. **図形の回転 (モデルビュー行列)**
+
    `GL_MODELVIEW` モードでトラックボール処理の回転行列を掛け合わせることで、マウス操作に応じて図形（箱）自体を回転させます。
 
-2. **テクスチャのアニメーション (テクスチャ行列):**
+2. **テクスチャのアニメーション (テクスチャ行列)**
+
    アニメーションの時間 `t` をもとに、`GL_TEXTURE` モードでテクスチャ行列に対して回転変換を適用しています。
 
-```c
-glMatrixMode(GL_TEXTURE);
-glLoadIdentity();
-glTranslated(0.5, 0.5, 0.0);
-glRotated(t * 360.0, 0.0, 0.0, 1.0);
-glTranslated(-1.0, -1.0, 0.0);
-```
+   ```c
+   glMatrixMode(GL_TEXTURE);
+   glLoadIdentity();
+   glTranslated(0.5, 0.5, 0.0);
+   glRotated(t * 360.0, 0.0, 0.0, 1.0);
+   glTranslated(-1.0, -1.0, 0.0);
+   ```
 
 box.cpp で設定したテクスチャ座標 (0.0, 0.0) ～ (2.0, 2.0) の中央は (1.0, 1.0) です。そのため、まず `glTranslated(` -1.0, -1.0, 0.0 `)` でテクスチャ座標の中央が原点に来るように平行移動し、その原点を中心に `glRotated()` で回転させます。最後に `glTranslated(` 0.5, 0.5, 0.0 `)` を行い、回転の基準とした原点がテクスチャ画像自身の中心 (0.5, 0.5) に一致するように戻しています[^1]。
 
